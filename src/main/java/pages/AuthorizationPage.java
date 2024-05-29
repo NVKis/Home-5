@@ -4,13 +4,21 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.Scanner;
+
+import static tools.PropertyLoader.*;
+import static tools.Reader.setup;
+
+
 public class AuthorizationPage extends AbsBasePage{
-    private String login = System.getProperty("login");
-    private String password = System.getProperty("password");
     public AuthorizationPage(WebDriver driver) {
         super(driver);
     }
+
     public void authorizationUser() {
+        String login = loadSystemProperty("login");
+        String password = loadSystemProperty("password");
+
         String clickLoginLocator = "//div[./input[@name='email']]";
         String clickPassLocator = "//div[./input[@type='password']]";
         String inputEmailLocator = "//input[@name='email']";
@@ -22,4 +30,6 @@ public class AuthorizationPage extends AbsBasePage{
         driver.findElement(By.cssSelector("#__PORTAL__ button")).click();
         Assertions.assertTrue(waitTools.waitForCondition(ExpectedConditions.presenceOfElementLocated(By.cssSelector("img[src*='blue-owl']"))));
     }
+
+
 }

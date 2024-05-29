@@ -1,15 +1,10 @@
 import com.github.javafaker.Faker;
 import components.Header;
-import data.EnglishLevelData;
-import data.GenderData;
-import data.WorkGrafData;
+import data.*;
 import factory.DriverFactory;
-import data.InputFieldData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import pages.AuthorizationPage;
 import pages.MainPage;
@@ -19,17 +14,17 @@ import tools.WaitTools;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+@Tag("otus")
 public class AddInfoToProfile_Test {
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
     private WebDriver driver;
     private final Logger logger = LogManager.getLogger(AddInfoToProfile_Test.class);
 
-
-    @BeforeEach
+    @BeforeEach()
     public void driverSetup() {
-        driver = new DriverFactory(driver).create();
+        new DriverFactory(driver);
+        driver = DriverFactory.create();
     }
-
 
     @AfterEach
     public void driverStop() {
@@ -37,6 +32,7 @@ public class AddInfoToProfile_Test {
             driver.quit();
         }
     }
+
     @Test
     public void addInfoToProfile() {
         new MainPage(driver).open("/");
@@ -51,11 +47,16 @@ public class AddInfoToProfile_Test {
         profilePage.clearFields(InputFieldData.LNAMELATIN);
         profilePage.clearFields(InputFieldData.BLOGNAME);
         profilePage.clearFields(InputFieldData.DATEOFBRTH);
+        profilePage.clearFields(InputFieldData.COMPANY);
+        profilePage.clearFields(InputFieldData.WORK_POSITION);
         profilePage.inputFioInProfile(InputFieldData.FNAME, faker.name().firstName());
         profilePage.inputFioInProfile(InputFieldData.FNAMELATIN, faker.name().lastName());
         profilePage.inputFioInProfile(InputFieldData.LNAME, faker.name().firstName());
         profilePage.inputFioInProfile(InputFieldData.LNAMELATIN, faker.name().name());
         profilePage.inputFioInProfile(InputFieldData.BLOGNAME, faker.name().name());
+        profilePage.inputFioInProfile(InputFieldData.COMPANY, faker.company().name());
+        profilePage.inputFioInProfile(InputFieldData.WORK_POSITION, faker.job().position());
+        profilePage.fillExperienceOfDeveloping(ExperienceOfDeveloping.JAVA, "1 год");
         profilePage.inputFioInProfile(InputFieldData.DATEOFBRTH,
                 faker.date().birthday().toInstant().atZone(ZoneId.
                         systemDefault()).toLocalDate().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
@@ -68,8 +69,8 @@ public class AddInfoToProfile_Test {
         profilePage.chooseContactsTwo("Habr", "Fan2316");
         profilePage.chooseGender(GenderData.MALE);
         profilePage.clickOnSave();
-
     }
+
     @Test
     public void checkProfile() {
         new MainPage(driver).open();

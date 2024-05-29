@@ -13,6 +13,7 @@ public class WaitTools {
     public WaitTools(WebDriver driver) {
         this.driver = driver;
     }
+
     public boolean waitForCondition(ExpectedCondition condition) {
         try {
             new WebDriverWait(driver, Duration.ofSeconds(10)).until(condition);
