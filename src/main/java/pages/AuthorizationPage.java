@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.Scanner;
 
 import static tools.PropertyLoader.*;
-import static tools.Reader.setup;
+
 
 
 public class AuthorizationPage extends AbsBasePage{

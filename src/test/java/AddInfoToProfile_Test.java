@@ -39,6 +39,7 @@ public class AddInfoToProfile_Test {
         new Header(driver).clickButtonEnter();
         new AuthorizationPage(driver).authorizationUser();
         new Header(driver).popUp();
+        new ProfilePage(driver).checkingFields();
         ProfilePage profilePage = new ProfilePage(driver);
         profilePage.clearFieldsCountryAndEnglish();
         profilePage.clearFields(InputFieldData.FNAME);
@@ -69,14 +70,8 @@ public class AddInfoToProfile_Test {
         profilePage.chooseContactsTwo("Habr", "Fan2316");
         profilePage.chooseGender(GenderData.MALE);
         profilePage.clickOnSave();
+
     }
 
-    @Test
-    public void checkProfile() {
-        new MainPage(driver).open();
-        new Header(driver).clickButtonEnter();
-        new AuthorizationPage(driver).authorizationUser();
-        new Header(driver).popUp();
-        new ProfilePage(driver).checkingFields();
-    }
+
 }
